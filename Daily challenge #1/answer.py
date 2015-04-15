@@ -18,7 +18,7 @@ def make_opposite(n, t):
         else:
             opposite2.append(int(1))
 
-
+#
 response1 = int(input("Please enter the first number: "))
 response2 = int(input("Please enter the second number:"))
 a = return_binary(response1)
