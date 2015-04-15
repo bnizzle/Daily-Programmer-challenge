@@ -1,64 +1,49 @@
-__author__ = 'Bnizzle'
+#!/usr/bin/python
+import sys
+
+def dec_to_bin(x):
+  ''' convert decimal to binary, keeping leading 0's
+      http://stackoverflow.com/questions/16926130/python-convert-to-binary-and-keep-leading-zeros
+  '''
+  return str(format(int(x), '#010b'))[2:]
+
+def reverseBinChars(x):
+  ''' reverse the binary number
+      ex: 1001 => 0110
+  ''' 
+  reversedBinaryChars = ""
+  for i in range(len(x)):
+    if x[i] == "0":
+      reversedBinaryChars += "1"
+    else:
+      reversedBinaryChars += "0"
+
+  return reversedBinaryChars
+
+def bin_to_dec(binaryNumber):
+  '''adding 0b to get decimal number from binary number'''
+
+  return int(binaryNumber, 2)
 
 
-def return_binary(n):
-    return '{0:08b}'.format(n)
+# convert to binary
+x_bin = dec_to_bin(str(sys.argv[1]))
+y_bin = dec_to_bin(str(sys.argv[2]))
 
+matchPoints = 0
 
-def make_opposite(n, t):
-    for num in n:
-        if num == 1:
-            opposite1.append(int(0))
-        else:
-            opposite1.append(int(1))
+# go through each character to compare if characters match
+for i in range(len(x_bin)):
+  if x_bin[i] == y_bin[i]:
+    matchPoints = matchPoints + 1
 
-    for num in t:
-        if num == 1:
-            opposite2.append(int(0))
-        else:
-            opposite2.append(int(1))
+numOfBits =  len(x_bin)
+compatibility = float(matchPoints)/numOfBits
 
-#
-response1 = int(input("Please enter the first number: "))
-response2 = int(input("Please enter the second number:"))
-a = return_binary(response1)
-b = return_binary(response2)
-i = 0
-com = 0
-array1 = []
-array2 = []
-opposite1 = []
-opposite2 = []
-count = 0
-total = 8
+x_avoid_bin = reverseBinChars(x_bin)
+y_avoid_bin = reverseBinChars(y_bin)
 
-for digit in a:
-    array1.append(int(digit))
-print array1
-for digit in b:
-    array2.append(int(digit))
-print array2
-
-while i != 8:
-    if array1[i] == array2[i]:
-         count += 1
-    i += 1
-per = float(count) / total * 100
-
-make_opposite(array1, array2)
-
-opposite_num1 = int(''.join(map(str, opposite1)))
-opposite_num2 = int(''.join(map(str, opposite2)))
-
-opp1 = (int(str(opposite_num1), 2))
-opp2 = (int(str(opposite_num2), 2))
-
-'''
-    50% Compatibility
-    100 should avoid 155
-    42 should avoid 213
-'''
-
-print ('%r%% Compatibility' % per)
-print response1, 'should avoid', opp1
-print response2, 'should avoid', opp2
+# display the result
+print str(compatibility*100) + "% Compatibility"
+print str(sys.argv[1]) + " should avoid " + str(bin_to_dec(x_avoid_bin))
+print str(sys.argv[2]) + " should avoid " + str(bin_to_dec(y_avoid_bin))
